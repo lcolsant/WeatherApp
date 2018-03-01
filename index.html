@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Weather App</title>
+        <link rel="stylesheet" href="style.css">
+        <script type="text/javascript" src= 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+        <script >
+            $(document).ready(function(){
+                //$("button").click(function(){
+                $("form").submit(function(){
+                    // location = "Los Angeles, US";
+                    var location = $('input[name="location"]').val();
+                    var apiKey = 'ab93560c3c304c6be78da42e40565e12';
+                    console.log(location);
+                    $.get(`http://api.openweathermap.org/data/2.5/weather?q=${location}&units=imperial&&appid=${apiKey}`,function(res){
+                        console.log(res);
+                        var html_str = "";
+                        html_str += `<h2>${res.name}</h2>`;
+                        html_str += `<p>Current temp: ${res.main.temp} F</p>`;
+                        html_str += `<p>Temp Min: ${res.main.temp_min} F</p>`;
+                        html_str += `<p>Temp Max: ${res.main.temp_max} F</p>`;
+                        html_str += `<p>Humidity: ${res.main.humidity} %</p>`;
+                        html_str += `<p>Pressure: ${res.main.pressure} hpa</p><br>`;
+                        $('#results').append(html_str);  
+                    }, "json");
+
+                    return false;
+                });
+
+            });
+        
+        </script>
+    </head>
+    <body>
+        <div id="container">
+            <div id="findWeather">
+                <h1>My Weather App</h1>
+                <form>
+                    <input type="text" id="location" name="location" placeholder="Enter location">
+                    <button>Search Weather</button>
+                </form>
+                <div id="results">
+                    <!-- <p>Results go here</p> -->
+                </div>
+            </div>
+        </div>
+        
+    </body>
+</html>
